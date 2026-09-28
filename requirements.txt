@@ -1,0 +1,22 @@
+# Core web framework
+streamlit>=1.57
+
+# Data handling
+pandas>=2.0
+numpy>=1.26
+
+# Classical machine learning
+scikit-learn>=1.4
+
+# Quantum machine learning (works with Qiskit 2.x + Aer simulator)
+qiskit>=2.0
+qiskit-machine-learning>=0.9
+qiskit-aer>=0.19
+
+# Visualisation
+matplotlib>=3.8
+seaborn>=0.13
+plotly>=5.20
+
+# Explainability
+shap>=0.46

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>QDETEX | Alzheimer's Hybrid Quantum ML</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-extras.css">
+  <script src="lib/chart.umd.min.js"></script>
+  <script src="lib/papaparse.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">Q</div><div><b>QDETEX</b><small>Quantum Intelligence</small></div></div>
+    <nav>
+      <button class="nav active" data-page="dashboard">⌂ <span>Dashboard</span></button>
+      <button class="nav" data-page="dataset">▣ <span>Dataset</span></button>
+      <button class="nav" data-page="preprocess">⚙ <span>Preprocessing</span></button>
+      <button class="nav" data-page="features">◇ <span>Feature Engineering</span></button>
+      <button class="nav" data-page="classical">◆ <span>Classical ML</span></button>
+      <button class="nav" data-page="quantum">◈ <span>Hybrid Quantum ML</span></button>
+      <button class="nav" data-page="prediction">➜ <span>Prediction</span></button>
+      <button class="nav" data-page="results"><span class="nav-star">★</span> <span>Results & Accuracy</span></button>
+      <button class="nav" data-page="comparison">▥ <span>Performance</span></button>
+      <button class="nav" data-page="explain">✦ <span>Explainability</span></button>
+      <button class="nav" data-page="visuals">◉ <span>Analytics</span></button>
+      <button class="nav" data-page="circuit">◎ <span>Quantum Method</span></button>
+    </nav>
+    <div class="side-bottom"><span class="live-dot"></span> Experiment workspace<br><small>QDETEX research prototype</small></div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div><span class="mini">TEAM QDETEX</span><h1 id="title">QDETEX — Hybrid Quantum Machine Learning Platform</h1></div>
+      <div class="run-state" id="runState"><span class="live-dot"></span> Live Experiment</div>
+    </header>
+
+    <!-- ================= DASHBOARD ================= -->
+    <section id="dashboard" class="page active">
+      <div class="dashboard-hero">
+        <div class="hero-copy">
+          <span class="badge">QDETEX • ALZHEIMER'S INTELLIGENCE</span>
+          <h2>Alzheimer's detection<br><em>with a quantum edge.</em></h2>
+          <p>Upload an Alzheimer's-related dataset (or start with the built-in ADAS/MMSE sample) and QDETEX trains a classical model and a hybrid quantum VQC on your data — then measures accuracy, precision, recall, F1 and the confusion matrix for real.</p>
+          <button class="cta" onclick="go('dataset')">Launch Alzheimer's Workflow <span>→</span></button>
+        </div>
+        <div class="hero-visual">
+          <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+          <div class="qball">Q<span>+</span></div>
+          <div class="float-card f1">DATA<br><b id="fcRows">READY</b></div>
+          <div class="float-card f2">QML<br><b>4 QUBITS</b></div>
+          <div class="float-card f3">MODEL<br><b id="fcModel">LIVE</b></div>
+        </div>
+      </div>
+
+      <div class="section-title"><div><span class="mini">LIVE WORKFLOW STATUS</span><h3>QDETEX Experiment Pipeline</h3></div><span class="dataset-chip" id="dashDataset">Alzheimer's Sample Dataset</span></div>
+      <div class="workflow-cards">
+        <div class="flow-card active" onclick="go('dataset')"><span>01</span><div class="flow-icon">▣</div><b>Dataset</b><small id="wfData">60 rows · 7 columns</small><i id="wfDataIco">•</i></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-card" onclick="go('preprocess')"><span>02</span><div class="flow-icon">⚙</div><b>Preprocess</b><small id="wfPrep">Ready to clean</small><i id="wfPrepIco">•</i></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-card" onclick="go('features')"><span>03</span><div class="flow-icon">◇</div><b>Reduce Features</b><small>2–6 quantum inputs</small><i>•</i></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-card" onclick="go('classical')"><span>04</span><div class="flow-icon">◆</div><b>Classical ML</b><small id="wfClass">Not trained</small><i id="wfClassIco">•</i></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-card" onclick="go('quantum')"><span>05</span><div class="flow-icon">◈</div><b>Hybrid QML</b><small id="wfQuantum">Not run</small><i id="wfQuantumIco">•</i></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-card" onclick="go('results')"><span>06</span><div class="flow-icon">★</div><b>Results</b><small id="wfResults">Awaiting run</small><i id="wfResultsIco">•</i></div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="panel result-panel">
+          <div class="panel-head"><div><span class="mini">EXPERIMENT RESULTS</span><h3>Model Performance</h3></div><button class="ghost" onclick="go('results')">View details →</button></div>
+          <div class="accuracy-grid">
+            <div class="accuracy-card classical"><small>CLASSICAL ML</small><strong id="dashClassAcc">—</strong><span id="dashClassModel">Accuracy</span></div>
+            <div class="vs">VS</div>
+            <div class="accuracy-card quantum"><small>HYBRID QML</small><strong id="dashQuantumAcc">—</strong><span>Accuracy</span></div>
+          </div>
+          <div class="result-line"><span id="winnerText">Run the experiment to compare the measured results.</span><b id="winnerBadge">WAITING</b></div>
+        </div>
+        <div class="panel quick-panel">
+          <span class="mini">PROJECT SNAPSHOT</span><h3>Experiment Overview</h3>
+          <div class="quick-row"><span>Dataset</span><b id="snapRows">60 × 7</b></div>
+          <div class="quick-row"><span>Target</span><b id="snapTarget">target</b></div>
+          <div class="quick-row"><span>Quantum features</span><b id="snapFeatures">4</b></div>
+          <div class="quick-row"><span>Qubits</span><b>4</b></div>
+          <div class="quick-row"><span>Experiment status</span><b class="green" id="snapStatus">Ready</b></div>
+        </div>
+      </div>
+      <div class="notice">⚠ <b>Alzheimer's Research / Educational Use Only.</b> QDETEX is a prototype for experimentation and learning about early-disease (Alzheimer's) detection. It is not a clinical diagnosis system and results must not be used for medical decisions.</div>
+    </section>
+
+    <!-- ================= DATASET / UPLOAD ================= -->
+    <section id="dataset" class="page">
+      <div class="page-head">
+        <div><span class="mini">01 / DATA</span><h2>Dataset Upload</h2><p>Drop an Alzheimer's CSV file or use the built-in sample (ADAS-Cog, MMSE, CDR, FAQ…). Analysis runs on the real data.</p></div>
+        <button class="ghost" onclick="downloadSample()">↓ Sample CSV</button>
+      </div>
+
+      <div class="error-banner hidden" id="uploadError"><span>⚠</span><div id="uploadErrorText"></div></div>
+
+      <div class="upload-zone" id="dropzone">
+        <div class="up-ico">↑</div>
+        <h3 id="dzTitle">Drop your Alzheimer's CSV here</h3>
+        <p id="dzSub">or click to browse — one file, simple format</p>
+        <div class="formats"><span>.CSV</span><span>MMSE · ADAS · CDR · FAQ</span><span>Final column = default target</span></div>
+        <div class="file-badge hidden" id="fileBadge"></div>
+        <input type="file" id="fileInput" accept=".csv,text/csv" hidden>
+      </div>
+
+      <div class="analyze-row">
+        <button class="cta" id="analyzeBtn" onclick="analyzeUpload()">Analyze Dataset — Classical + Quantum →</button>
+        <button class="btn-outline" id="sampleBtn" onclick="analyzeSample()">Run on Sample Dataset</button>
+        <label class="compact">Model
+          <select id="modelSelect">
+            <option>Logistic Regression</option>
+            <option>Random Forest</option>
+            <option>Support Vector Machine</option>
+          </select>
+        </label>
+        <label class="compact">Quantum features
+          <select id="uploadFeatureCount">
+            <option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-head"><h3>Dataset Summary</h3><span class="tag" id="dsTag">PREVIEW</span></div>
+          <div class="summary">
+            <div><small>ROWS</small><b id="rows">—</b></div>
+            <div><small>COLUMNS</small><b id="cols">—</b></div>
+            <div><small>TARGET</small><b id="targetLabel">—</b></div>
+          </div>
+          <label>Target / Class Column<select id="targetSelect"></select></label>
+        </div>
+        <div class="panel"><h3>Class Distribution</h3><canvas id="classChart"></canvas></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h3>Data Preview</h3><span class="tag">FIRST 10 ROWS</span></div>
+        <div class="table-wrap"><table id="dataTable"></table></div>
+      </div>
+    </section>
+
+    <!-- ================= PREPROCESSING ================= -->
+    <section id="preprocess" class="page">
+      <div class="page-head"><div><span class="mini">02 / PREPARE</span><h2>Data Preprocessing</h2><p>Validation, missing-value handling, encoding and scaling are applied automatically when the analysis runs.</p></div><button class="cta" onclick="go('dataset')">Back to Upload ↑</button></div>
+      <div class="four">
+        <div class="process"><span>01</span><b>Missing values</b><strong id="missingCount">—</strong><small>Median imputation</small></div>
+        <div class="process"><span>02</span><b>Duplicates</b><strong id="duplicateCount">—</strong><small>Duplicate row check</small></div>
+        <div class="process"><span>03</span><b>Encoding</b><strong id="encodingState">ON</strong><small>Class labels</small></div>
+        <div class="process"><span>04</span><b>Scaling</b><strong id="scalingState">STANDARD</strong><small>Feature normalization</small></div>
+      </div>
+      <div class="panel"><span class="mini">PIPELINE</span><div class="big-flow"><span>CSV</span><i>→</i><span>VALIDATE</span><i>→</i><span>IMPUTE</span><i>→</i><span>ENCODE</span><i>→</i><span>SCALE</span><i>→</i><span>80/20 SPLIT</span></div><div class="console" id="preprocessLog">Waiting for the analysis to run…</div></div>
+    </section>
+
+    <!-- ================= FEATURE ENGINEERING ================= -->
+    <section id="features" class="page">
+      <div class="page-head"><div><span class="mini">03 / REDUCE</span><h2>Feature Engineering</h2><p>Features are reduced to a compact quantum-friendly representation before the VQC runs.</p></div><label class="compact">Quantum features<select id="featureCount"><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option></select></label></div>
+      <div class="two-col">
+        <div class="panel"><span class="mini">SELECTED INPUTS</span><h3>Quantum Feature Set</h3><div id="featureList" class="feature-list"></div><p id="featureNote" class="cm-note">Run an analysis to populate this from real feature selection.</p></div>
+        <div class="panel"><span class="mini">SEPARATION</span><h3>First 2 Selected Features by Class</h3><canvas id="pcaChart"></canvas></div>
+      </div>
+      <div class="panel info-card"><b>Why reduce features?</b><p>Feature selection picks the most informative measurements (mutual information) so a small local quantum circuit can be used. This keeps the hybrid model feasible on a normal laptop while preserving the same comparison workflow.</p></div>
+    </section>
+
+    <!-- ================= CLASSICAL ML ================= -->
+    <section id="classical" class="page">
+      <div class="page-head"><div><span class="mini">04 / CLASSICAL</span><h2>Classical Machine Learning</h2><p>Real metrics from the trained classical model on the held-out test set.</p></div><div class="controls"><select id="classicalModel"><option>Logistic Regression</option><option>Random Forest</option><option>Support Vector Machine</option></select><button class="cta" onclick="reanalyzeClassical()">Re-train Classical →</button></div></div>
+      <div class="error-banner hidden" id="classicalError"></div>
+      <div class="metric-grid" id="classicalMetrics"></div>
+      <div class="two-col">
+        <div class="panel"><span class="mini">CONFUSION MATRIX</span><h3>Classification Result</h3><div id="classicalMatrix" class="matrix"></div></div>
+        <div class="panel"><span class="mini">RUN INFORMATION</span><h3>Model Status</h3><div id="classicalNote" class="console">No model has been trained yet.</div></div>
+      </div>
+    </section>
+
+    <!-- ================= HYBRID QUANTUM ================= -->
+    <section id="quantum" class="page">
+      <div class="page-head"><div><span class="mini">05 / QUANTUM</span><h2>Hybrid Quantum ML</h2><p>A real variational quantum classifier (Qiskit + Aer statevector) trained on your data.</p></div><button class="quantum-btn" onclick="reanalyzeQuantum()">◈ Re-run Quantum</button></div>
+      <div class="four">
+        <div class="process quantum-card"><span>QUBITS</span><strong id="qQubits">4</strong><small>Local simulator</small></div>
+        <div class="process quantum-card"><span>LAYERS</span><strong>2</strong><small>Parameterized ansatz</small></div>
+        <div class="process quantum-card"><span>ENCODING</span><strong>ANGLE</strong><small>Selected feature angles</small></div>
+        <div class="process quantum-card"><span>OPTIMIZER</span><strong>SPSA</strong><small>Variational optimizer</small></div>
+      </div>
+      <div class="panel"><span class="mini">QUANTUM LEARNING</span><h3>How the hybrid model works</h3><p class="quantum-statement">Reduced features are scaled into rotation angles and encoded into a quantum state. A parameterized circuit transforms that state while SPSA — a classical optimizer — tunes the circuit parameters against the classification loss. The measured output is converted into a prediction. Everything runs locally with Qiskit on the Aer statevector simulator.</p><div id="quantumResult" class="console">Waiting for quantum experiment…</div><div id="quantumErrorBox" class="q-alert hidden"></div></div>
+      <div class="two-col">
+        <div class="panel"><span class="mini">MEASURED PERFORMANCE</span><h3>Hybrid QML Metrics</h3><div id="quantumMetrics"></div></div>
+        <div class="panel"><span class="mini">INTERPRETATION</span><h3>What to compare</h3><p>QDETEX never assumes quantum learning is superior. The measured result is compared against the classical model using the same test set and the same metrics.</p></div>
+      </div>
+    </section>
+
+    <!-- ================= PREDICTION ================= -->
+    <section id="prediction" class="page">
+      <div class="page-head"><div><span class="mini">06 / PREDICT</span><h2>Research Prediction</h2><p>The real model predictions on a held-out test sample — actual vs predicted, with probability.</p></div><select id="predictionModel"><option>Classical ML</option><option>Hybrid Quantum ML</option></select></div>
+      <div class="prediction-grid">
+        <div class="panel prediction-result">
+          <span>EXPERIMENTAL OUTPUT</span>
+          <strong id="predictionClass">—</strong>
+          <div class="confidence"><i id="confidenceBar"></i></div>
+          <b id="predictionText">Run the analysis to see a real prediction.</b>
+          <div class="risk-chip-row"><span class="risk-chip" id="predRiskChip">RISK —</span></div>
+          <div class="pred-box" style="width:100%;margin-top:16px"><small>ACTUAL TEST LABEL</small><strong id="actualLabel" style="font-size:24px">—</strong></div>
+        </div>
+        <div class="panel"><span class="mini">SAMPLE EXPLANATION</span><h3>Prediction Details</h3><div id="predictionDetails" class="console">Details appear after the analysis runs.</div></div>
+      </div>
+      <div class="notice">⚠ <b>Alzheimer's Research/Educational Use Only</b> — prediction output is not a medical diagnosis of Alzheimer's disease.</div>
+    </section>
+
+    <!-- ================= RESULTS / ACCURACY ================= -->
+    <section id="results" class="page">
+      <div class="page-head">
+        <div><span class="mini">★ RESULTS / ACCURACY</span><h2>Model Analysis Complete</h2><p id="resultsSubtitle">Open the Analysis page and run a dataset to populate these results.</p></div>
+        <span class="run-badge" id="resultsStatus">NO ANALYSIS YET</span>
+      </div>
+
+      <div class="results-hero">
+        <div class="gauge-wrap">
+          <svg class="gauge" viewBox="0 0 200 200">
+            <defs>
+              <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#16cde7"/>
+                <stop offset="100%" stop-color="#8265ff"/>
+              </linearGradient>
+            </defs>
+            <circle class="gauge-track" cx="100" cy="100" r="84"></circle>
+            <circle class="gauge-value" id="gaugeValue" cx="100" cy="100" r="84"></circle>
+          </svg>
+          <div class="gauge-center"><small>Alzheimer's Accuracy</small><strong id="gaugeAccuracy">—</strong><span id="gaugeState">Awaiting run</span></div>
+        </div>
+        <div class="results-copy">
+          <span class="mini">OVERALL RESULT</span>
+          <h3 id="resultsHeadline">Run an analysis to see honest, measured results.</h3>
+          <p id="resultsText">QDETEX trains a classical model and a hybrid quantum model (VQC) on your uploaded dataset. Every number shown here is computed from real model predictions on the held-out test set.</p>
+          <div class="chip-row">
+            <span class="tag">Disease<b id="riDisease">—</b></span>
+            <span class="tag">Dataset<b id="riDataset">—</b></span>
+            <span class="tag">Model<b id="riModel">—</b></span>
+            <span class="tag">Status<b class="green" id="riStatus">—</b></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-cards" id="metricCards"></div>
+
+      <div class="two-col">
+        <div class="panel">
+          <span class="mini">CONFUSION MATRIX</span><h3>Prediction vs Reality</h3>
+          <div class="big-matrix" id="resultsMatrix"></div>
+          <div class="matrix-legend"><span>&nbsp;</span></div>
+          <p class="cm-note" id="cmNote">The confusion matrix comes from the real model predictions.</p>
+        </div>
+        <div class="panel">
+          <span class="mini">CLASSIFICATION RESULT</span><h3>Predicted vs Actual</h3>
+          <div id="resultsPrediction"></div>
+        </div>
+      </div>
+
+      <div class="panel risk-panel">
+        <div class="panel-head">
+          <div><span class="mini">PATIENT RISK DETECTION</span><h3>Why is this patient at risk?</h3><p id="riskSummary">Runs after the analysis estimates the first held-out test patient's risk from the trained model.</p></div>
+          <span class="run-badge" id="riskLevel">—</span>
+        </div>
+        <div class="risk-grid">
+          <div class="risk-score-box">
+            <div class="risk-ring"><strong id="riskScore">—</strong><small>RISK SCORE</small></div>
+            <p class="cm-note">Score = model probability of <b id="riskPositiveLabel">the positive class</b>. Reference population = normal (<b id="riskRefClass">non-case</b>) patients in the training split.</p>
+          </div>
+          <div id="riskFactors" class="risk-factors"><p class="cm-note">Run an analysis to list the features driving this patient's risk.</p></div>
+        </div>
+      </div>
+
+      <div class="dashboard-info">
+        <div class="panel info-cell"><span class="mini">DATASET</span><h3 id="diName">—</h3><div class="kpis"><div><small>SAMPLES</small><b id="diRows">—</b></div><div><small>FEATURES</small><b id="diFeat">—</b></div></div></div>
+        <div class="panel info-cell"><span class="mini">MODEL</span><h3 id="diModel">—</h3><p id="diModelDetail">Hybrid approach: classical baseline + variational quantum circuit.</p></div>
+        <div class="panel info-cell"><span class="mini">TEMPORAL</span><h3 id="diTime">—</h3><div class="kpis"><div><small>CLASSICAL TRAIN</small><b id="diCTime">—</b></div><div><small>QUANTUM TRAIN</small><b id="diQTime">—</b></div></div></div>
+        <div class="panel info-cell"><span class="mini">PROCESSING</span><h3 id="diStatus">—</h3><p id="diStatusDetail">Binary classification · 80/20 split · standard scaling.</p></div>
+      </div>
+
+      <div class="section-title"><div><span class="mini">ACTIONS</span><h3>Run another experiment</h3></div></div>
+      <div class="analyze-row">
+        <button class="cta" onclick="go('dataset')">Upload a new dataset ↑</button>
+        <button class="btn-outline" id="reRunBtn" onclick="analyzeSample()">Re-run on Sample Dataset</button>
+      </div>
+    </section>
+
+    <!-- ================= PERFORMANCE ================= -->
+    <section id="comparison" class="page">
+      <div class="page-head"><div><span class="mini">07 / EVALUATE</span><h2>Performance Comparison</h2><p>Side-by-side, measured on the same test set.</p></div><button class="cta" onclick="analyzeSample()">Run Both Models →</button></div>
+      <div class="winner-banner"><div><span class="mini">RESULT</span><h3 id="comparisonWinner">Awaiting experiment</h3></div><div id="comparisonDelta">—</div></div>
+      <div class="panel"><table class="compare" id="compareTable"><thead><tr><th>Metric</th><th>Classical ML</th><th>Hybrid QML</th></tr></thead><tbody><tr><td colspan="3">Run the analysis to populate actual results.</td></tr></tbody></table></div>
+      <div class="panel"><canvas id="compareChart"></canvas></div>
+    </section>
+
+    <!-- ================= EXPLAINABILITY ================= -->
+    <section id="explain" class="page">
+      <div class="page-head"><div><span class="mini">08 / EXPLAIN</span><h2>Explainability</h2><p>Feature importance measured with permutation importance on the trained classical model.</p></div><button class="ghost" onclick="renderImportance()">Refresh Importance</button></div>
+      <div class="two-col"><div class="panel"><canvas id="importanceChart"></canvas></div><div class="panel"><span class="mini">MODEL INTERPRETATION</span><h3>Feature Influence</h3><div id="explanation">Run an analysis to compute real feature importance.</div></div></div>
+      <div class="notice">Feature importance describes model behavior in this experiment. It does not prove medical causation or clinical significance.</div>
+    </section>
+
+    <!-- ================= ANALYTICS ================= -->
+    <section id="visuals" class="page">
+      <div class="page-head"><div><span class="mini">09 / ANALYTICS</span><h2>Data Analytics</h2><p>Explore distributions and relationships in the current dataset.</p></div></div>
+      <div class="two-col"><div class="panel"><h3>Class Distribution</h3><canvas id="classChart2"></canvas></div><div class="panel"><h3>Feature Distribution</h3><canvas id="distChart"></canvas></div></div>
+      <div class="panel"><h3>Correlation Overview</h3><div id="heatmap" class="heatmap"></div></div>
+    </section>
+
+    <!-- ================= QUANTUM METHOD ================= -->
+    <section id="circuit" class="page">
+      <div class="page-head"><div><span class="mini">10 / QUANTUM METHOD</span><h2>Quantum Processing Method</h2><p>The actual VQC workflow executed by the backend.</p></div></div>
+      <div class="method-list">
+        <div class="method"><span>01</span><div><b>Feature Encoding</b><p>Selected biomedical features are normalized and mapped to rotation angles so each value becomes part of a small quantum state.</p></div></div>
+        <div class="method"><span>02</span><div><b>Parameterized Quantum Layer</b><p>Trainable rotation parameters let the quantum model learn a representation of the encoded input.</p></div></div>
+        <div class="method"><span>03</span><div><b>Quantum Interaction</b><p>Entangling operations allow information from multiple encoded features to interact inside the simulated quantum system.</p></div></div>
+        <div class="method"><span>04</span><div><b>Measurement</b><p>The final quantum state is measured (Aer statevector simulator) and converted into numerical outputs.</p></div></div>
+        <div class="method"><span>05</span><div><b>Classical Optimization</b><p>SPSA updates the trainable parameters from the classification loss, then repeats the process up to the configured iteration budget.</p></div></div>
+      </div>
+      <div class="panel"><span class="mini">QDETEX HYBRID PRINCIPLE</span><h3>Classical computer + quantum learning component</h3><p class="quantum-statement">QDETEX uses classical computing for data preparation, feature selection, optimization and evaluation, while the VQC (Qiskit) processes the reduced feature representation on a local simulator. The backend is implemented in Python with Qiskit — this dashboard simply drives it.</p></div>
+    </section>
+
+    <footer>QDETEX • Hybrid Quantum ML Platform • Early Alzheimer's Detection Research • Educational Prototype • Not for medical diagnosis</footer>
+  </main>
+</div>
+
+<!-- ================= LOADING OVERLAY ================= -->
+<div class="loader hidden" id="loader">
+  <div class="loader-box">
+    <span class="loader-title">QDETEX · RUNNING ANALYSIS</span>
+    <div class="spinner-ring"></div>
+    <ul id="loaderSteps">
+      <li id="st1">Validating dataset</li>
+      <li id="st2">Preprocessing & scaling features</li>
+      <li id="st3">Training classical model</li>
+      <li id="st4">Running hybrid quantum-classical model</li>
+      <li id="st5">Generating results</li>
+    </ul>
+    <p id="loaderNote">Note: the quantum training step can take up to a minute on a laptop.</p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

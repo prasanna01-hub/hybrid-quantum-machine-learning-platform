@@ -1,0 +1,145 @@
+/* =============================================================
+   QDETEX UI upgrade — Results page, gauge, loader, upload zone
+   ============================================================= */
+
+:root{--qbg:#060c18;--qpanel:#0a1627;--qborder:#1b304a;--qaccent:#735cff;--qcyan:#16cde7;--qtext:#eaf2ff;--qmuted:#7890ad}
+
+/* ---------- Prominent results section ---------- */
+.run-badge{border:1px solid #1fb46a;color:#42dda0;background:#0b1f1a;border-radius:20px;padding:9px 14px;font-size:9px;letter-spacing:1.5px}
+.results-hero{display:grid;grid-template-columns:280px 1fr;gap:32px;align-items:center;padding:34px;border:1px solid #243c5e;border-radius:20px;background:
+  radial-gradient(circle at 20% 30%,#16294b 0,#0b1728 48%,#07101d 100%);margin-bottom:16px}
+.gauge-wrap{position:relative;width:100%;max-width:280px;margin:0 auto}
+.gauge{width:100%;display:block;transform:rotate(-90deg)}
+.gauge-track{fill:none;stroke:#1a2f4d;stroke-width:13}
+.gauge-value{fill:none;stroke:url(#gaugeGrad);stroke-width:13;stroke-linecap:round;transition:stroke-dashoffset 1.3s cubic-bezier(.2,.8,.2,1)}
+.gauge-tick{stroke:#33496b;stroke-width:2}
+.gauge-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.gauge-center small{font-size:9px;letter-spacing:2.5px;color:#6f86a4;text-transform:uppercase}
+.gauge-center strong{font-size:52px;font-weight:900;background:linear-gradient(90deg,#16cde7,#8265ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gauge-center span{font-size:10px;color:#42dda0}
+.results-copy h3{font-size:26px;margin:8px 0 8px}
+.results-copy p{color:#8ba0bb;font-size:13px;line-height:1.8;max-width:620px}
+.chip-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.chip-row .tag b{color:#d8e4f3;font-weight:700}
+.chip-row .tag{font-size:9px}
+.chip-row .tag b{display:inline-block;margin-left:6px}
+
+/* ---------- Metric cards ---------- */
+.metric-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
+.metric-card{padding:18px 16px;background:linear-gradient(160deg,#0c1c31,#0a1526);border:1px solid #1d3350;border-radius:14px;position:relative;overflow:hidden}
+.metric-card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,#735cff,#16cde7)}
+.metric-card small{font-size:8px;letter-spacing:1.6px;color:#6f86a4;text-transform:uppercase}
+.metric-card strong{display:block;font-size:30px;margin:9px 0 3px;color:#c8d7ea}
+.metric-card b{position:absolute;top:12px;right:12px;font-size:8px;font-weight:700;opacity:.9}
+.metric-card .up{color:#42dda0}.metric-card .flat{color:#94a8c0}
+
+/* ---------- Confusion matrix (big) ---------- */
+.big-matrix{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.big-matrix .cell{padding:16px;border-radius:10px;text-align:center;font-size:9px;letter-spacing:1px;background:#0e2036}
+.big-matrix .cell b{display:block;font-size:30px;color:#dee9f8;margin-top:4px}
+.cell.tn{background:#0d2419;border:1px solid #1c4a33}.cell.tn b{color:#42dda0}
+.cell.fp{background:#241a12;border:1px solid #4a3a1c}.cell.fp b{color:#e0b05a}
+.cell.fn{background:#2a1420;border:1px solid #5a2340}.cell.fn b{color:#e87ba0}
+.cell.tp{background:#161537;border:1px solid #4a3f9e}.cell.tp b{color:#a294ff}
+.cm-note{margin-top:10px;font-size:9px;color:#6f86a4}
+.matrix-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+.matrix-legend span{font-size:9px;color:#7d92ad}
+
+/* ---------- Prediction result ---------- */
+.prediction-hero{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.pred-box{padding:16px;border-radius:12px;background:#0e2036;border:1px solid #223a5a;text-align:center}
+.pred-box small{font-size:8px;letter-spacing:1.6px;color:#6f86a4}
+.pred-box strong{display:block;font-size:30px;margin:8px 0 4px;color:#9b8cff}
+.pred-box .prob{font-size:11px;color:#42dda0;font-weight:800}
+.pred-match{display:inline-block;margin-top:8px;padding:5px 10px;border-radius:14px;font-size:8px}
+
+/* ---------- Dataset / model info strip ---------- */
+.dashboard-info{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+.info-cell h3{font-size:13px;margin:6px 0}
+.info-cell p{font-size:10px;line-height:1.7;margin:0}
+.info-cell .kpis{display:flex;gap:18px;margin-top:10px}
+.info-cell .kpis div small{display:block;font-size:8px;color:#637b9b}
+.info-cell .kpis div{border-top:1px solid #1d3350;padding-top:6px;width:42%}
+.info-cell .kpis b{font-size:15px;color:#d5e1f2}
+
+/* ---------- Upload zone ---------- */
+.upload-zone{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:38px 20px;border:1.5px dashed #2c4568;border-radius:16px;background:#0a1728;cursor:pointer;transition:.25s}
+.upload-zone:hover,.upload-zone.over{border-color:#735cff;background:#0d1e37;box-shadow:0 0 34px #735cff22}
+.upload-zone .up-ico{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:24px;background:linear-gradient(135deg,#142742,#16214a);border:1px solid #2b4266}
+.upload-zone h3{margin:14px 0 4px;font-size:16px}
+.upload-zone p{color:#6f86a4;font-size:11px;margin:0}
+.upload-zone .formats{margin-top:12px;display:flex;gap:8px}
+.upload-zone .formats span{font-size:8px;border:1px solid #243a57;border-radius:14px;padding:5px 10px;color:#8da2be}
+.upload-zone .file-badge{margin-top:12px;color:#42dda0;font-size:10px}
+.analyze-row{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+
+/* ---------- Loading overlay ---------- */
+.loader{position:fixed;inset:0;z-index:60;background:rgba(4,9,18,.92);backdrop-filter:blur(6px);display:grid;place-items:center}
+.loader.hidden{display:none}
+.loader-box{text-align:center;width:min(480px,90vw);padding:34px;border:1px solid #223a5a;border-radius:18px;background:#0a1627;box-shadow:0 30px 80px #000}
+.loader-title{font-size:10px;letter-spacing:3px;color:#8eb2ff}
+.spinner-ring{width:74px;height:74px;margin:24px auto 20px;border-radius:50%;border:3px solid #1a2f4d;border-top-color:#735cff;border-right-color:#16cde7;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loaderSteps{list-style:none;padding:0;margin:0 auto;max-width:380px;text-align:left}
+#loaderSteps li{padding:9px 0 9px 30px;position:relative;color:#6f86a4;font-size:12px;border-top:1px solid #131f36}
+#loaderSteps li::before{content:"";position:absolute;left:2px;top:12px;width:15px;height:15px;border-radius:50%;border:2px solid #2b4266}
+#loaderSteps li.done{color:#9db2cc}
+#loaderSteps li.done::before{background:#42dda0;border-color:#42dda0;content:"✓";color:#04280f;font-size:10px;display:grid;place-items:center}
+#loaderSteps li.active{color:#eaf2ff;font-weight:700}
+#loaderSteps li.pending::before{animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.35}}
+#loaderSteps li.fail{color:#e07b7b}
+#loaderNote{margin-top:16px;color:#5d7594;font-size:10px}
+
+/* ---------- Toast / errors ---------- */
+.error-banner{padding:14px 16px;border-radius:12px;border:1px solid #5a2340;background:#21101b;color:#e8a3b8;font-size:11px;margin-bottom:14px;display:flex;gap:10px;align-items:center;line-height:1.6}
+.error-banner.hidden{display:none}
+.error-banner b{color:#f0b9ca}
+
+/* ---------- Quantum step info ---------- */
+.q-chip{display:inline-block;padding:8px 11px;margin:4px;border-radius:9px;background:#131d33;border:1px solid #2b4266;font-size:9px;color:#aec0d5}
+.q-alert{border:1px solid #5b4723;background:#211a10;color:#c5b185;border-radius:10px;padding:12px 14px;font-size:10px;margin-top:12px}
+
+/* ---------- Buttons ---------- */
+.btn-outline{border:1px solid #253c59;background:#0d1c30;color:#aebdd0;border-radius:8px;padding:11px 14px;cursor:pointer;font-size:11px;font-weight:700}
+.btn-outline:hover{border-color:#4d4a99;color:#fff}
+.cta:disabled,.quantum-btn:disabled,.btn-outline:disabled{opacity:.45;cursor:not-allowed}
+
+/* ---------- Patient Risk Detection ---------- */
+.risk-panel{margin-top:15px}
+.risk-panel .panel-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.risk-grid{display:grid;grid-template-columns:230px 1fr;gap:18px;align-items:stretch}
+.risk-score-box{border:1px solid #22395b;border-radius:14px;background:#0b1728;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px}
+.risk-ring{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;text-align:center;border:5px solid #33507a;box-shadow:0 0 26px rgba(60,140,255,.25)}
+.risk-ring strong{font-size:30px;line-height:1;background:linear-gradient(120deg,#42dda0,#16cde7);-webkit-background-clip:text;background-clip:text;color:transparent}
+.risk-ring small{display:block;font-size:8px;letter-spacing:2px;color:#7188a6;margin-top:9px;font-weight:800}
+.risk-factors{display:flex;flex-direction:column;gap:10px;justify-content:center}
+.rf{border:1px solid #1e3351;border-radius:12px;background:linear-gradient(180deg,#0e1c31,#0a1526);padding:11px 14px}
+.rf-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.rf-top b{font-size:11px;color:#d8e4f3}
+.rf-top span{font-size:9px;color:#7188a6}
+.rf em{display:block;font-style:normal;font-size:9px;margin-top:8px;font-weight:700;letter-spacing:.4px}
+.rf em.bad{color:#e87ba0}
+.rf em.good{color:#42dda0}
+.rf-bar{height:5px;background:#13233c;border-radius:4px;margin-top:9px;overflow:hidden}
+.rf-bar i{display:block;height:100%;border-radius:4px;transition:width .8s ease}
+.risk-chip-row{margin-top:12px}
+.risk-chip{display:inline-block;font-size:9px;letter-spacing:1.4px;border:1px solid #2b4266;border-radius:20px;padding:8px 12px;color:#a8bbd4;background:#0e1c30;font-weight:800}
+@media(max-width:720px){
+  .risk-grid{grid-template-columns:1fr}
+}
+
+/* ---------- Responsive ---------- */
+@media(max-width:1050px){
+  .metric-cards{grid-template-columns:repeat(3,1fr)}
+  .dashboard-info{grid-template-columns:repeat(2,1fr)}
+  .results-hero{grid-template-columns:1fr;text-align:center}
+  .results-hero .results-copy p{margin:0 auto}
+  .chip-row{justify-content:center}
+}
+@media(max-width:720px){
+  .metric-cards{grid-template-columns:repeat(2,1fr)}
+  .dashboard-info,.prediction-hero{grid-template-columns:1fr}
+  .big-matrix{grid-template-columns:1fr}
+  .gauge-center strong{font-size:40px}
+}

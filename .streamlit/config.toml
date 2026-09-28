@@ -1,0 +1,24 @@
+[theme]
+base = "dark"
+primaryColor = "#00D4AA"
+backgroundColor = "#0b0f19"
+secondaryBackgroundColor = "#141a2b"
+textColor = "#E6EDF3"
+linkColor = "#00D4AA"
+borderColor = "#2a3654"
+codeBackgroundColor = "#0d1220"
+
+# Quantum-healthcare accent palette (indigo + teal + coral)
+chartCategoricalColors = ["#00D4AA", "#7C5CFF", "#58A6FF", "#F47067", "#F6C445", "#3FB950", "#DB61A2", "#8B949E"]
+blueColor   = "#58A6FF"
+greenColor  = "#00D4AA"
+redColor    = "#F47067"
+yellowColor = "#F6C445"
+violetColor = "#7C5CFF"
+
+[theme.sidebar]
+backgroundColor = "#0e1424"
+secondaryBackgroundColor = "#161d31"
+textColor = "#E6EDF3"
+borderColor = "#2a3654"
+primaryColor = "#00D4AA"
